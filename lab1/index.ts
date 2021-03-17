@@ -1,8 +1,9 @@
 class StartsApp {
-    input1 : HTMLInputElement;
-    input2 : HTMLInputElement;
-    input3 : HTMLInputElement;
-    input4 : HTMLInputElement;
+    inputContainer : HTMLElement;
+    inputGenerator : HTMLInputElement;
+
+    numberOfInputs: number;
+    values : Array<number> = [];
 
     sumResult : HTMLInputElement;
     avgResult : HTMLInputElement;
@@ -13,41 +14,79 @@ class StartsApp {
     }
 
     RunApp(){
+        this.InitializeVariables();
         this.GetValuesFromInputs();
-        this.WatchChangesOnInputs();
+    }
+
+    InitializeVariables(){
+
+        this.numberOfInputs = 0;
+        this.inputContainer = document.querySelector("#input-container");
+        this.inputGenerator = document.querySelector("#input-generator");
+        this.inputGenerator.addEventListener('change', (e) => {
+            var target = e.target as HTMLInputElement;
+            this.GenerateInputs(target.value);
+            this.UpdateValues();
+        })
+    }
+
+    GenerateInputs(number){
+
+        while(number > this.numberOfInputs){
+
+            var inputWrapper : HTMLElement = document.createElement('div');
+            inputWrapper.className = "input-wrapper";
+            inputWrapper.id = "input-wrapper-" + this.numberOfInputs;
+
+            var input : HTMLInputElement = document.createElement('input'); 
+            input.addEventListener("input", () => this.UpdateValues())
+            input.className = 'input';
+            input.type = 'number';
+
+            var closeButton : HTMLElement = document.createElement('button');
+            closeButton.textContent = "X";
+            closeButton.addEventListener('click', (e) => {
+                let target = e.target as HTMLElement;
+                target.parentElement.remove();
+                this.numberOfInputs--;
+                this.inputGenerator.value = this.numberOfInputs.toString();
+            })
+            
+            inputWrapper.append(input);
+            inputWrapper.append(closeButton);
+            this.inputContainer.append(inputWrapper);
+
+            this.numberOfInputs++;
+        }
+
+        while(number < this.numberOfInputs){
+
+            document.querySelector("#input-wrapper-" + (this.numberOfInputs-1)).remove();
+            this.numberOfInputs--;
+        }
     }
 
     GetValuesFromInputs(){
-        this.input1 = document.querySelector('#input1');
-        this.input2 = document.querySelector("#input2");
-        this.input3 = document.querySelector("#input3");
-        this.input4 = document.querySelector("#input4");
-        console.log(this.input1);
 
-        console.log(document.querySelector(".input-data"));
         this.sumResult = document.querySelector("#sum");
         this.avgResult = document.querySelector("#avg");
         this.maxResult = document.querySelector("#max");
         this.minResult = document.querySelector("#min");
     }
 
-    WatchChangesOnInputs(){
-        this.input1.addEventListener("input", () => this.Count());
-        this.input2.addEventListener("input", () => this.Count());
-        this.input3.addEventListener("input", () => this.Count());
-        this.input4.addEventListener("input", () => this.Count());
-    }
+    UpdateValues(){
+        this.values = [];
+        let sum : number = 0;
+        
+        for(let i = 0; i < this.inputContainer.childElementCount; i++){
+            let child = this.inputContainer.children[i].firstChild as HTMLInputElement;
+            sum += +child.value;
+            this.values.push(+child.value);
+        }
 
-    Count(){
-        let number1 = +this.input1.value;
-        let number2 = +this.input2.value;
-        let number3 = +this.input3.value;
-        let number4 = +this.input4.value;
-
-        let sum = number1 + number2 + number3 + number4;
-        let avg = sum / 4;
-        let min = Math.min(...[number1, number2, number3, number4]);
-        let max = Math.max(...[number1, number2, number3, number4]);
+        let avg = sum / this.numberOfInputs;
+        let min = Math.min(...this.values);
+        let max = Math.max(...this.values);
 
         this.sumResult.value = `${sum}`;
         this.avgResult.value = `${avg}`;
