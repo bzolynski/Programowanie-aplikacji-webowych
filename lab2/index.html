@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Sound</title>
+</head>
+<body>
+    <div class="keypad">
+        <div class="row">
+            <button data-button-key="q">q</button>
+            <button data-button-key="w">w</button>
+            <button data-button-key="e">e</button>
+            <button data-button-key="r">r</button>
+            <button data-button-key="t">t</button>
+        </div>
+        <div class="row">
+            <button data-button-key="a">a</button>
+            <button data-button-key="s">s</button>
+            <button data-button-key="d">d</button>
+            <button data-button-key="f">f</button>
+        </div>
+    </div>
+    <div class="channels">
+        <div class="channel" id="0">
+            Channel 1
+            <button class="recButton">Rec</button>
+            <button class="playButton">Play</button>
+        </div>
+        <div class="channel" id="1">
+            Channel 2
+            <button class="recButton">Rec</button>
+            <button class="playButton">Play</button>
+        </div>
+        <div class="channel" id="2">
+            Channel 3
+            <button class="recButton">Rec</button>
+            <button class="playButton">Play</button>
+        </div>
+        <div class="channel" id="3">
+            Channel 4
+            <button class="recButton">Rec</button>
+            <button class="playButton">Play</button>
+        </div>
+    </div>
+
+    <audio src="./sounds/sounds/boom.wav" data-sound="boom" data-key="q"></audio>
+    <audio src="./sounds/sounds/clap.wav" data-sound="clap" data-key="w"></audio>
+    <audio src="./sounds/sounds/hihat.wav" data-sound="hihat" data-key="e"></audio>
+    <audio src="./sounds/sounds/kick.wav" data-sound="kick" data-key="r"></audio>
+    <audio src="./sounds/sounds/openhat.wav" data-sound="openhat" data-key="t"></audio>
+    <audio src="./sounds/sounds/ride.wav" data-sound="ride" data-key="a"></audio>
+    <audio src="./sounds/sounds/snare.wav" data-sound="snare" data-key="s"></audio>
+    <audio src="./sounds/sounds/tink.wav" data-sound="tink" data-key="d"></audio>
+    <audio src="./sounds/sounds/tom.wav" data-sound="tom" data-key="f"></audio>
+    <script src="index.js"></script>
+    
+</body>
+</html>

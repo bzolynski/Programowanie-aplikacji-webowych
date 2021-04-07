@@ -1,0 +1,36 @@
+.keypad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.keypad button{
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    border-radius: 10px;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: auto;
+    animation: none;
+
+}
+.keypad .row{
+    margin: 10px;
+}
+.keyClicked{
+    background-color: #4272f5;
+}
+.channels {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.recButton, .playButton{
+    border-radius: 10px;
+    height: 30px;
+    width: 50px;
+}
+.acriveRec{
+    background-color: orange;
+}
