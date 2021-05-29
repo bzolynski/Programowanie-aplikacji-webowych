@@ -1,0 +1,25 @@
+.colorpicker-container{
+    background: #1e2022;
+    padding: 10px;
+    border: 1px solid var(--secondaryColor);
+    border-radius: 5px;
+    position: absolute;
+    top: inherit;
+    right: inherit;
+    display: grid;
+    grid-auto-flow: column;
+    z-index: 10000000;
+    gap: 5px;
+
+    .color{
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 1px solid black;
+        cursor: pointer;
+        &:hover{
+            border-color: white;
+
+        }
+    }
+}

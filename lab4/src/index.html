@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notes</title>
+  </head>
+  <body>
+     <div class="modal-background" id="modalBackground"></div>     
+     <header>
+      <div class="navbar-wrapper">
+        <nav>
+          
+          <ul class="navbar-links">
+            <li><a href="#">Test1</a></li>
+            <li><a href="#">Test1</a></li>
+            <li><a href="#">Test1</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main>      
+      <div class="side-panel-wrapper">
+        
+      </div>
+      <div class="main-content">
+        <div id="noteForm" class="note-form note-closed">
+          <!--Closed-->
+          <div id="noteFormClosedItems" class="note-closed-items ">
+            <div class="note-closed-wrapper">
+              <p>Take a note</p>
+              <div class="note-form-icons">
+                <img src="./assets/note.svg"  />
+              </div>
+
+            </div>
+          </div>
+          <!--OPEN-->
+          <div id="noteFormOpenItems" class="note-open-items hide">
+            <div class="top-bar">
+              <input id="noteTitle" placeholder="title"/>
+              <img id="formPin" src="./assets/pin.svg"  />
+            </div>
+            <div class="text-field">
+              <textarea id="noteFormContent" placeholder="note content" ></textarea>
+            </div>
+            <div class="labels">
+              label
+            </div>
+            <div class="bottom-bar">
+              <div id="formOptions" class="options">
+                <img id="colorPicker" src="./assets/palette.svg"  />
+              </div>
+              <div class="buttons">
+                <button id="addNote">accept</button>
+                <button id="closeForm">close</button>
+
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        <div id="pinnedNotesContainer" class="notes-container pinned-notes-container">
+          
+        </div>
+        <!--Note container-->
+        <div id="notesContainer" class="notes-container">
+          
+        </div>
+      </div>
+      
+      
+    </main>
+    <script src="index.js"></script>
+  </body>
+</html>

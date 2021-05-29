@@ -1,0 +1,147 @@
+.modal-background{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0.5;
+    z-index: 100;
+    display: none;
+    &.show{
+        display: inline-block;
+    }
+}
+.modal{
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    width: 100%;
+    height: 100%;
+    z-index: 100000;
+    
+    .modal-content{
+        width: 350px;
+        height: 200px;
+        border-radius: 5px;
+        border: 1px var(--secondaryColor) solid;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-evenly;
+        padding: 5px;
+        &.pinned{
+            border-color: var(--pinnedBorderColor);
+        }
+    
+        .modal-topbar{
+            background: inherit;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            input{
+                background: inherit;
+                width: 90%;
+                border: none;
+                outline: none;
+                overflow: none;
+                }
+            img{
+                background: inherit;
+                height: 15px;
+                width: 20px;
+                margin-top: 5px;
+                cursor: pointer;
+                &:hover{
+                    transform: scale(1.1);
+                }
+            }
+        }
+    
+        .modal-content{
+            width: 100%;
+            height: 90%;
+            background: inherit;
+            border: none;
+            margin: 5px 0;
+            padding: 0;
+            textarea{
+                width: 100%;
+                background: inherit;
+                height: 100%;
+                resize: none;
+                border: none;
+                overflow: auto;
+                outline: none;
+                -webkit-box-shadow: none;
+                -moz-box-shadow: none;
+                box-shadow: none;
+    
+                &:focus{
+                    border: none;
+                }
+            }
+        }
+    
+        .modal-bottombar{
+            width: 100%;
+            background: inherit;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+    
+            .options{
+                background: inherit;
+    
+                .note-date{
+                    background: inherit;
+                    font-size: 10px;
+                }
+    
+                img{
+                background: inherit;
+                height: 15px;
+                width: 20px;
+                cursor: pointer;
+                &:hover{
+                    transform: scale(1.1);
+                }
+                
+            }
+            }
+            .buttons{
+                background: inherit;
+                button{
+                    background: inherit;
+                    height: 100%;
+                    width: 60px;
+                    cursor: pointer;
+                    border-radius: 10px;
+                    padding: 3px;
+                    text-align: center;
+                    border: none;
+                    transition: all 0.3s ease 0s;
+                    font-weight: bold;
+                    margin: 0 5px;
+    
+                    &:hover{
+                        transform: scale(1.1);
+                        background-color: var(--secondaryColor);
+                    }
+                    &:active{
+    
+                        background-color: lightgray;
+                    }
+                }
+            }
+                    
+        }
+    }
+    
+    
+
+}
