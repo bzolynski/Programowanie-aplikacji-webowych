@@ -109,10 +109,12 @@ export class NoteForm {
 		this.noteRepository.create(newNote);
 		this.noteService.render(newNote);
 		this.clearInputs();
+		this.closeForm();
 	}
 
 	private clearInputs() {
 		(document.getElementById('noteTitle') as HTMLInputElement).value = '';
 		(document.getElementById('noteFormContent') as HTMLInputElement).value = '';
+		this.colorPicker.selectedColor = this.colorPicker.colors[0];
 	}
 }
