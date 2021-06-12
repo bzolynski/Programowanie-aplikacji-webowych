@@ -23,7 +23,7 @@ class StartsApp {
         this.numberOfInputs = 0;
         this.inputContainer = document.querySelector("#input-container");
         this.inputGenerator = document.querySelector("#input-generator");
-        this.inputGenerator.addEventListener('change', (e) => {
+        this.inputGenerator.addEventListener('change', (e : Event) => {
             var target = e.target as HTMLInputElement;
             this.GenerateInputs(target.value);
             this.UpdateValues();

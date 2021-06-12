@@ -34,8 +34,8 @@ export class App {
 		if (this.isCityStored(cityName)) {
 			return;
 		} else {
-			this.addToLocalStorage(cityName);
 			if (weatherData != null) {
+				this.addToLocalStorage(cityName);
 				const forecast = this.mapper.mapDataToForecast(weatherData);
 				this.renderWeatherInfo(forecast);
 			} else {

@@ -9,6 +9,7 @@ export class NoteService {
 	private noteRepository: INoteRepository;
 	private notesContainer: HTMLElement;
 	private pinnedNotesContainer: HTMLElement;
+
 	constructor(noteRepository: INoteRepository) {
 		this.noteRepository = noteRepository;
 		this.deleteNote = this.deleteNote.bind(this);
@@ -22,7 +23,7 @@ export class NoteService {
 	public render(note: INote) {
 		var container: HTMLElement;
 		var noteElement = this.getNoteEl(note);
-		if (note.state == NoteState.notPinned) {
+		if (note.pinned === false) {
 			container = this.notesContainer;
 		} else {
 			container = this.pinnedNotesContainer;
@@ -30,6 +31,52 @@ export class NoteService {
 		}
 
 		container.prepend(noteElement);
+	}
+
+	public deleteNote(e: MouseEvent) {
+		var target = e.target as HTMLElement;
+		var id = target.parentElement.parentElement.parentElement.id;
+		document.getElementById(id).remove();
+		this.noteRepository.delete(id);
+	}
+
+	public async editNote(e: MouseEvent) {
+		var target = e.target as HTMLElement;
+		if (target.id !== 'deleteNote' && target.id !== 'pinNote') {
+			var noteEl = target.closest('.note');
+			var id = noteEl.id;
+			var note = await this.noteRepository.get(id);
+			var modal = new Modal(note, this.noteRepository);
+			modal.render();
+		}
+	}
+
+	private async pinNote(e: MouseEvent) {
+		var target = e.target as HTMLElement;
+		var noteEl = target.parentElement.parentElement;
+		var note = await this.noteRepository.get(noteEl.id);
+
+		if (noteEl.classList.contains('pinned')) {
+			this.pinnedNotesContainer.removeChild(noteEl);
+			this.notesContainer.prepend(noteEl);
+			noteEl.classList.remove('pinned');
+			note.pinned = false;
+		} else {
+			noteEl.classList.add('pinned');
+			this.notesContainer.removeChild(noteEl);
+			this.pinnedNotesContainer.prepend(noteEl);
+			note.pinned = true;
+		}
+		this.noteRepository.update(note.id, note);
+	}
+
+	public async renderAll() {
+		var notes = await this.noteRepository.getAll();
+		if (notes !== null) {
+			notes.forEach((note) => {
+				this.render(note);
+			});
+		}
 	}
 
 	private getNoteEl(note: INote): HTMLElement {
@@ -44,52 +91,6 @@ export class NoteService {
 		noteEl.appendChild(this.createBottombar());
 		noteEl.addEventListener('click', this.editNote);
 		return noteEl;
-	}
-
-	public deleteNote(e: MouseEvent) {
-		var target = e.target as HTMLElement;
-		var id = target.parentElement.parentElement.parentElement.id;
-		document.getElementById(id).remove();
-		this.noteRepository.delete(id);
-	}
-
-	public editNote(e: MouseEvent) {
-		var target = e.target as HTMLElement;
-		if (target.id !== 'deleteNote' && target.id !== 'pinNote') {
-			var noteEl = target.closest('.note');
-			var id = noteEl.id;
-			var note = this.noteRepository.get(id);
-			var modal = new Modal(note, this.noteRepository);
-			modal.render();
-		}
-	}
-
-	private pinNote(e: MouseEvent) {
-		var target = e.target as HTMLElement;
-		var noteEl = target.parentElement.parentElement;
-		var note = this.noteRepository.get(noteEl.id);
-
-		if (noteEl.classList.contains('pinned')) {
-			this.pinnedNotesContainer.removeChild(noteEl);
-			this.notesContainer.prepend(noteEl);
-			noteEl.classList.remove('pinned');
-			note.state = NoteState.notPinned;
-		} else {
-			noteEl.classList.add('pinned');
-			this.notesContainer.removeChild(noteEl);
-			this.pinnedNotesContainer.prepend(noteEl);
-			note.state = NoteState.pinned;
-		}
-		this.noteRepository.update(note.id, note);
-	}
-
-	public renderAll() {
-		var notes = this.noteRepository.getAll();
-		if (notes !== null) {
-			notes.forEach((note) => {
-				this.render(note);
-			});
-		}
 	}
 
 	private createTopbar(): HTMLDivElement {

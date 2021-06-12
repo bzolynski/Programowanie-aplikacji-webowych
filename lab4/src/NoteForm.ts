@@ -1,4 +1,4 @@
-import { GuidGenerator } from './services/GuidGenerator';
+import { v4 as uuidv4 } from 'uuid';
 import { INote } from './interfaces/INote';
 import { ColorPicker } from './models/ColorPicker';
 import { NoteState } from './enums/NoteState.Enum';
@@ -8,10 +8,9 @@ import { NoteService } from './NoteService';
 export class NoteForm {
 	private acceptButton: HTMLButtonElement;
 	private formPin: HTMLElement;
-	private guidGen: GuidGenerator;
 	private colorPickerElement: HTMLElement;
 	private colorPicker: ColorPicker;
-	private pinStatus: NoteState;
+	private pinnedStatus: boolean;
 	private noteRepository: INoteRepository;
 	private noteService: NoteService;
 
@@ -26,7 +25,6 @@ export class NoteForm {
 	constructor(noteRepository: INoteRepository, noteService: NoteService) {
 		this.noteRepository = noteRepository;
 		this.noteService = noteService;
-		this.guidGen = new GuidGenerator();
 		this.colorPicker = new ColorPicker();
 		this.initializeInputs();
 		this.addNote = this.addNote.bind(this);
@@ -43,7 +41,7 @@ export class NoteForm {
 		this.noteFormElement.classList.remove('note-closed');
 		this.noteClosedItems.classList.add('hide');
 		this.noteOpenItems.classList.remove('hide');
-		this.pinStatus = NoteState.notPinned;
+		this.pinnedStatus = false;
 
 		this.addEvents();
 	}
@@ -88,23 +86,23 @@ export class NoteForm {
 
 		if (noteEl.classList.contains('pinned')) {
 			noteEl.classList.remove('pinned');
-			this.pinStatus = NoteState.notPinned;
+			this.pinnedStatus = false;
 		} else {
 			noteEl.classList.add('pinned');
-			this.pinStatus = NoteState.pinned;
+			this.pinnedStatus = true;
 		}
 	}
 
 	private addNote() {
 		var newNote: INote = {
-			id: this.guidGen.generate(),
+			id: uuidv4(),
 			title: (document.getElementById('noteTitle') as HTMLInputElement).value,
 			content: (document.getElementById('noteFormContent') as HTMLInputElement).value,
 			label: '',
 			color: this.colorPicker.getColor(),
 			date: new Date().toLocaleDateString(),
 			time: new Date().toLocaleTimeString(),
-			state: this.pinStatus
+			pinned: this.pinnedStatus
 		};
 		this.noteRepository.create(newNote);
 		this.noteService.render(newNote);

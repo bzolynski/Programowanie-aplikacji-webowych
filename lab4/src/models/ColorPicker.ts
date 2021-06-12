@@ -1,4 +1,4 @@
-import { GuidGenerator } from '../services/GuidGenerator';
+import {v4 as uuidv4} from 'uuid';
 import '../styles/colorpicker.scss';
 export class ColorPicker {
 	colors: string[];
@@ -6,7 +6,7 @@ export class ColorPicker {
 	selectedColor: string;
 	constructor(color?: string) {
 		this.colors = [ '#1e2022', 'black', '#026e6e', '#015726', '#1a385f', '#c9491e' ];
-		this.id = new GuidGenerator().generate();
+		this.id = uuidv4();
 		this.open = this.open.bind(this);
 		this.changeColor = this.changeColor.bind(this);
 		this.selectedColor = this.colors[0];

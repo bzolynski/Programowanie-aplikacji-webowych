@@ -1,26 +1,37 @@
 import { IAppStorage } from './interfaces/IAppStorage';
 import { LocalStorage } from './LocalStorage';
+import { FirebaseStorage } from './FirebaseStorage';
 import { INote } from './interfaces/INote';
 import { INoteRepository } from './interfaces/INoteRepository';
+import { StoreType, storeType } from './config';
 
 export class NoteRepository implements INoteRepository {
 	appStorage: IAppStorage;
 	constructor() {
-		this.appStorage = LocalStorage.GetInstance();
+		switch (storeType) {
+			case StoreType.firebase: {
+				this.appStorage = FirebaseStorage.GetInstance();
+				break;
+			}
+			case StoreType.localStorage: {
+				this.appStorage = LocalStorage.GetInstance();
+				break;
+			}
+		}
 	}
-	create(entity: INote): void {
-		this.appStorage.createNote(entity);
+	async create(entity: INote): Promise<void> {
+		return await this.appStorage.createNote(entity);
 	}
-	update(id: string, entity: INote): void {
-		this.appStorage.updateNote(id, entity);
+	async update(id: string, entity: INote): Promise<void> {
+		return await this.appStorage.updateNote(id, entity);
 	}
-	delete(id: string): void {
-		this.appStorage.deleteNote(id);
+	async delete(id: string): Promise<void> {
+		return await this.appStorage.deleteNote(id);
 	}
-	get(id: string): INote {
-		return this.appStorage.getNote(id);
+	async get(id: string): Promise<INote> {
+		return await this.appStorage.getNote(id);
 	}
-	getAll(): INote[] {
-		return this.appStorage.getAllNotes();
+	async getAll(): Promise<INote[]> {
+		return await this.appStorage.getAllNotes();
 	}
 }

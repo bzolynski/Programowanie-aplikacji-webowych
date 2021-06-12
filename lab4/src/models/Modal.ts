@@ -31,7 +31,7 @@ export class Modal {
 		this.modalContent.appendChild(this.createContent());
 		this.modalContent.appendChild(this.createBottombar());
 		this.modalContainer.appendChild(this.modalContent);
-		if (this.note.state == NoteState.pinned) this.modalContent.classList.add('pinned');
+		if (this.note.pinned) this.modalContent.classList.add('pinned');
 
 		this.modalBackground.classList.add('show');
 		this.modalBackground.parentNode.appendChild(this.modalContainer);
@@ -99,7 +99,7 @@ export class Modal {
 			color: this.colorPicker.getColor(),
 			date: new Date().toLocaleDateString(),
 			time: new Date().toLocaleTimeString(),
-			state: this.note.state
+			pinned: this.note.pinned
 		};
 		this.noteRepository.update(this.note.id, this.note);
 		this.rerender();

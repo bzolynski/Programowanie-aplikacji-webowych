@@ -8,5 +8,5 @@ export interface INote {
 	color: string;
 	date: string;
 	time: string;
-	state: NoteState;
+	pinned: boolean;
 }
