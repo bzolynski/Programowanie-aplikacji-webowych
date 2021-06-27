@@ -8,6 +8,8 @@
         "removeComments": true,
     },
     "include": [
-        "src/**/*"
+        "src/**/*", 
+        "tests", 
+        "jest.config.js"
     ],
 }
